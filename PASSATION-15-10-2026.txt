@@ -1,0 +1,50 @@
+PASSATION DU 15/10/2026 — GROUPE
+================================
+
+À lire avec CLAUDE.md, REPRENDRE-ICI.md, JOURNAL-DE-BORD.md
+et PLAN-REALISATION-GROUPE.xlsx (généré par outils/plan/generer_plan.py).
+
+Agent : Claude (Anthropic), assistant de développement.
+
+
+1. OÙ NOUS EN SOMMES
+--------------------
+Branche de référence : main.
+Aucun code métier encore : squelette Laravel 13 + documentation.
+Plan : 74 chantiers en 14 sections — 7 terminés, 63 à faire, 4 à trancher,
+14 attendent une action du propriétaire.
+
+
+2. FAIT LE 15/10/2026
+---------------------
+- Cahier des charges retrouvé sur la branche claude/api-security-performance-djs6mo
+  et fusionné dans main (PR #1) : docs/01 à 04 + README.
+- Décisions : Inertia + React + Tailwind ; SMS gratuit (log puis sandbox
+  Africa's Talking) ; réinitialisation des mineurs par le parent ou le secrétariat.
+- Outils de suivi : plan Excel + générateur, REPRENDRE-ICI.md, JOURNAL-DE-BORD.md,
+  CLAUDE.md, cette passation. Branche bloc/0-suivi-du-projet, fusionnée dans main.
+
+
+3. À FAIRE PAR LE PROPRIÉTAIRE (détail : REPRENDRE-ICI.md § 4)
+--------------------------------------------------------------
+- 0.5 URGENT : rendre privé le dépôt GESTION-DE-SITES (comptes de démonstration
+  exposés, mot de passe « password »).
+- 0.4 Déposer PLAN-REALISATION-GROUPE.xlsx dans le dépôt (Add file › Upload files).
+- 0.7 Installer PostgreSQL 16, Redis, Node 20 dans Laragon ; activer pdo_pgsql et redis.
+- 0.6 Réfléchir au nom de domaine (rien à acheter maintenant).
+Puis dire « N° terminé » pour chaque point.
+
+
+4. À TRANCHER (pas bloquant tout de suite)
+------------------------------------------
+- 7.2 Règles de calcul des bulletins (un bulletin réel anonymisé suffit).
+- 8.5 Règles de paie des professeurs (vacataire / permanent, retenues).
+- 10.1 Prix des packs.
+
+
+5. PROCHAIN BLOC DE L'AGENT
+---------------------------
+Section 1 — socle technique : Inertia/React/Tailwind, laravel-modules,
+.env.example (PostgreSQL + Redis), .gitignore (.env*), jetons de la charte,
+CI GitHub, ENVIRONNEMENT-DE-DEV.md.
+Branche : bloc/1-socle-technique.
