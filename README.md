@@ -1,58 +1,63 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Plateforme de gestion scolaire multitenant
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Application SaaS multitenant (web + mobile Flutter) de gestion scolaire, destinée aux collèges,
+lycées, universités et grandes écoles. Chaque établissement dispose d'un espace isolé, de sa
+propre URL et de son propre branding.
 
-## About Laravel
+**État du projet** : spécification. Le code applicatif n'est pas encore écrit — le dépôt contient
+le squelette Laravel 13 et la documentation de référence.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Documentation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Document | Contenu |
+|---|---|
+| [`docs/01-cahier-des-charges-v2.md`](docs/01-cahier-des-charges-v2.md) | Cahier des charges fonctionnel complet (source, conservé pour traçabilité) |
+| [`docs/02-addendum-v3-securite-performance.md`](docs/02-addendum-v3-securite-performance.md) | **Normatif.** Protection des API, gestion des secrets, stratégie d'identifiants, performance, CI/CD et mise en production |
+| [`docs/03-rapport-evaluation-code.md`](docs/03-rapport-evaluation-code.md) | Évaluation des propositions techniques de la v2 : ce qui est validé, amendé, écarté |
+| [`docs/04-charte-graphique.md`](docs/04-charte-graphique.md) | Charte « Ivoire & Encre » : jetons, typographie, composants, accessibilité |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+L'addendum v3 **remplace** certaines sections du cahier v2 ; le tableau de correspondance
+figure en tête de ce document.
 
-## Learning Laravel
+## Pile technique
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+| Couche | Choix |
+|---|---|
+| Back-end | Laravel 13 / PHP 8.3 |
+| Base de données | PostgreSQL 16 (partitionnement, RLS, index partiels) |
+| Cache, sessions, files d'attente | Redis 7 |
+| Front-end web | Blade + Vite + Tailwind CSS 4 |
+| Mobile | Flutter (iOS + Android) |
+| Infrastructure | VPS + Nginx, Cloudflare (DNS, SSL joker, CDN, WAF) |
+| CI/CD | GitHub Actions |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Principes non négociables
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Ces règles conditionnent l'architecture et sont vérifiées automatiquement :
 
-## Agentic Development
+1. **Isolation multitenant à trois barrières** — scope d'ORM, Row-Level Security PostgreSQL,
+   suite de tests d'isolation par endpoint.
+2. **Refus par défaut** — toute route est authentifiée et autorisée sauf inscription explicite
+   en liste blanche.
+3. **Identifiants séparés** — `id` numérique interne pour les jointures, `public_id` UUID pour
+   l'exposition, identifiant métier (matricule/INE) pour l'humain.
+4. **Aucun secret dans le dépôt** — le `.env` de production est généré au déploiement depuis
+   GitHub Environments.
+5. **Performance vérifiée, pas espérée** — budgets de requêtes SQL et de latence appliqués en CI
+   sur un jeu de données de 100 000 apprenants.
+6. **Aucune erreur technique brute en production** — page générique pour l'utilisateur, alerte
+   détaillée au super-admin.
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+> Une exigence de sécurité ou de performance qui n'est pas vérifiée automatiquement par un test
+> ou par la CI n'existe pas.
+
+## Mise en route (développement)
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer setup
+composer dev
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Avant la première migration, appliquer les correctifs de configuration listés dans
+[`docs/03-rapport-evaluation-code.md`](docs/03-rapport-evaluation-code.md) §4 — notamment le
+passage de SQLite à PostgreSQL, qui conditionne le partitionnement et la Row-Level Security.
