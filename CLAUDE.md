@@ -15,6 +15,8 @@ Le plan de réalisation : `PLAN-REALISATION-GROUPE.xlsx`, généré par
 
 **À la fin de chaque bloc de travail** :
 
+- **nettoyer** : supprimer toute donnée de test, fichier de brouillon, script ponctuel ou code
+  mort laissé par le bloc (règle du propriétaire, 16/10) — voir « Propreté » ci-dessous ;
 - mettre à jour les statuts dans `outils/plan/generer_plan.py` et régénérer le classeur ;
 - mettre à jour `REPRENDRE-ICI.md` (§§ 3 et 4) et ajouter une entrée à `JOURNAL-DE-BORD.md` ;
 - écrire `PASSATION-<JJ-MM-AAAA>.txt` (un par jour ; on complète celui du jour s'il existe) ;
@@ -32,3 +34,17 @@ Règles qui priment sur tout le reste :
 - Écrire en français, commentaires qui disent **pourquoi**.
 - Une tâche marquée « Vous » dans le plan n'est passée à Terminé que lorsque le propriétaire
   l'a dit (« N° terminé »).
+
+**Propreté du code (règle du propriétaire, 16/10)** :
+
+- Aucun fichier `scratch_*`, `check_*`, `test_*.php` à la racine, aucun `dd()`, `dump()`,
+  `var_dump()` ni `console.log` de mise au point laissé dans le code.
+- Les données de test vivent **uniquement** dans `database/factories` et dans les seeders de
+  développement, jamais dans les migrations. Les seeders de démonstration refusent de tourner
+  en production (`app()->isProduction()` → arrêt), et **aucun compte au mot de passe connu**
+  (« password », « 123456 »…) n'est créé hors de l'environnement local.
+- Les tests créent leurs données et les effacent (transaction annulée à la fin de chaque test).
+
+**Design (demande du propriétaire, 16/10)** : avant d'écrire la première page du front, présenter
+des **propositions visuelles** (maquettes HTML ouvrables dans le navigateur et captures) et
+attendre le choix du propriétaire. Aucune page n'est codée sur une direction non validée.
