@@ -5,6 +5,38 @@ en est maintenant : `REPRENDRE-ICI.md`.*
 
 ---
 
+## 16/10/2026 — Règles de propreté, design avant le front, passage à Claude Code
+
+**Agent :** Claude (Anthropic).
+
+### Ce qui a été fait
+
+1. **Plan Excel déposé** sur `main` par le propriétaire (01:30) : ligne 0.4 terminée.
+2. **Deux règles du propriétaire** inscrites dans `CLAUDE.md` (PR #3) :
+   - **propreté** : à la fin de chaque bloc, plus aucune donnée de test, brouillon ni code de
+     mise au point ; seeders de démonstration bloqués en production ; aucun compte au mot de passe
+     connu hors local ;
+   - **design** : propositions visuelles validées avant la première page du front (ligne 1.0).
+3. **Choix de l'outil : Claude Code sur le PC du propriétaire** (option A). Motifs : il peut
+   recevoir images et fichiers, reprendre l'historique (`claude --continue`), exécuter Laravel,
+   les tests et git sur le poste, et pousser le classeur Excel lui-même.
+4. **Continuité de l'agent** : `CLAUDE.md` réécrit — rôle, méthode, déroulé d'un bloc, règles,
+   environnement — pour qu'une nouvelle séance agisse exactement de la même façon ; commandes
+   `.claude/commands/reprendre.md` (`/reprendre`) et `fin-de-bloc.md` (`/fin-de-bloc`).
+5. **Plan** : lignes 0.8 (installer Claude Code), 1.0 (maquettes), 13.4 (propreté) ajoutées ;
+   77 chantiers, 8 terminés.
+
+### Trouvé en chemin
+
+- La version exacte du modèle n'est pas visible par l'agent : elle se lit dans l'interface Claude.
+- Le classeur sur `main` est celui du 15/10 : à régénérer au premier lancement de Claude Code.
+
+### Ce qui reste
+
+Voir `REPRENDRE-ICI.md` § 4. Prochain bloc : **1.0 — propositions de design**, dans Claude Code.
+
+---
+
 ## 15/10/2026 — Démarrage : cahier des charges, décisions, outils de suivi
 
 **Agent :** Claude (Anthropic).

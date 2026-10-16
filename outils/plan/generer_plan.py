@@ -62,8 +62,8 @@ PLAN = [
          "Ce classeur, REPRENDRE-ICI.md (où l'on en est), JOURNAL-DE-BORD.md (ce qui a été fait, "
          "séance par séance), PASSATION-<date>.txt (fin de séance), CLAUDE.md (consignes lues par "
          "l'agent à chaque séance).",
-         AGENT, "Déposer le fichier .xlsx dans le dépôt (voir REPRENDRE-ICI § 4).",
-         TERMINE, D(2026, 10, 15), D(2026, 10, 15)),
+         DEUX, "Fait : classeur déposé sur main le 16/10.",
+         TERMINE, D(2026, 10, 15), D(2026, 10, 16)),
         ("Dépôt GESTION-DE-SITES", "0.5", "Comptes de démonstration exposés publiquement",
          "Le dépôt est PUBLIC et contient ACCES_COMPTES.md, ACCES.txt, ACCES-ARTISAN.txt, "
          "ACCES_DE_TEST.txt : comptes de démonstration (dont un super-admin) au mot de passe "
@@ -90,9 +90,24 @@ PLAN = [
          "Node 20 ou plus. Puis me dire « 0.7 terminé ». Je fournirai la procédure détaillée "
          "dans ENVIRONNEMENT-DE-DEV.md au bloc 1.",
          A_FAIRE, None, None),
+        ("Outil de travail", "0.8", "Passer à Claude Code sur votre PC",
+         "Décidé le 16/10 (option A). Claude Code lit CLAUDE.md à chaque démarrage : il y trouve "
+         "son rôle, les règles et la procédure de reprise. Commandes du projet : /reprendre au "
+         "début d'une séance, /fin-de-bloc à la fin d'un bloc.",
+         VOUS,
+         "1) Installer Node 20. 2) npm install -g @anthropic-ai/claude-code. 3) git clone du dépôt "
+         "dans C:\\laragon\\www\\GROUPE. 4) pip install openpyxl (pour régénérer le plan). "
+         "5) Dans le dossier : claude, se connecter, puis taper /reprendre. Me dire « 0.8 terminé ».",
+         ATTENTE_VOUS, D(2026, 10, 16), None),
     ]),
 
     ("1. SOCLE TECHNIQUE — une base propre, vérifiée automatiquement", [
+        ("Design", "1.0", "Propositions visuelles avant toute page",
+         "Plusieurs directions de design (maquettes HTML ouvrables dans le navigateur + captures) "
+         "sur les écrans clés : page de bienvenue d'une école, choix de connexion, tableau de bord "
+         "élève, tableau du super-admin, version téléphone. Aucune page codée avant le choix.",
+         DEUX, "Choisir une direction (ou demander des retouches) et dire laquelle.",
+         A_FAIRE, None, None),
         ("Front web", "1.1", "Installer Inertia + React + Tailwind",
          "Laravel reste le cœur : routes, contrôleurs, validation, commandes artisan. Les pages "
          "sont en React. Vite compile ; budget de 180 ko de JavaScript par page.",
@@ -373,6 +388,10 @@ PLAN = [
         ("Vos retours", "13.3", "Dire « N° terminé » quand une tâche « Vous » est faite",
          "Je passe alors la ligne à Terminé et je mets les fichiers à jour.", VOUS,
          "Écrire simplement : « 0.5 terminé », « 1.6 terminé »…", TERMINE, D(2026, 10, 15), None),
+        ("Propreté", "13.4", "Nettoyer à la fin de chaque bloc",
+         "Aucune donnée de test, aucun brouillon (scratch_*, check_*), aucun dd() / console.log ; "
+         "seeders de démonstration bloqués en production ; aucun compte au mot de passe connu "
+         "hors local (règle du 16/10).", AGENT, "—", TERMINE, D(2026, 10, 16), None),
     ]),
 ]
 

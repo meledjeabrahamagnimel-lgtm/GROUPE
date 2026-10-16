@@ -1,0 +1,56 @@
+PASSATION DU 16/10/2026 — GROUPE
+================================
+
+À lire avec CLAUDE.md, REPRENDRE-ICI.md, JOURNAL-DE-BORD.md
+et PLAN-REALISATION-GROUPE.xlsx (généré par outils/plan/generer_plan.py).
+Dans Claude Code : taper /reprendre.
+
+Agent : Claude (Anthropic), assistant de développement.
+
+
+1. OÙ NOUS EN SOMMES
+--------------------
+Branche de référence : main.
+Aucun code métier encore : squelette Laravel 13 + documentation + outils de suivi.
+Plan : 77 chantiers en 14 sections — 8 terminés, 65 à faire, 4 à trancher,
+16 attendent une action du propriétaire.
+
+
+2. FAIT LE 16/10/2026
+---------------------
+- Plan Excel déposé sur main par le propriétaire (ligne 0.4 terminée).
+- PR #3 : règles de propreté du code et de validation du design avant le front.
+- Passage à Claude Code sur le PC décidé (option A).
+- CLAUDE.md réécrit : rôle de l'agent, méthode, déroulé d'un bloc, règles.
+  Toute nouvelle séance le lit au démarrage et agit de la même façon.
+- Commandes du projet : /reprendre (début de séance), /fin-de-bloc (fin de bloc).
+- Plan : lignes 0.8, 1.0 et 13.4 ajoutées.
+Branche bloc/0c-passage-claude-code, fusionnée dans main.
+
+
+3. À FAIRE PAR LE PROPRIÉTAIRE
+------------------------------
+- 0.5 URGENT : rendre privé le dépôt GESTION-DE-SITES.
+- 0.8 Installer Claude Code :
+    a) Node 20 (https://nodejs.org, version LTS)
+    b) npm install -g @anthropic-ai/claude-code
+    c) cd C:\laragon\www
+       git clone https://github.com/meledjeabrahamagnimel-lgtm/GROUPE.git
+       (si un dossier GROUPE existe déjà : cd GROUPE puis git pull)
+    d) pip install openpyxl
+    e) cd C:\laragon\www\GROUPE  puis  claude  ; se connecter ; taper /reprendre
+- 0.7 PostgreSQL 16 + Redis dans Laragon (l'agent guidera depuis Claude Code).
+Puis dire « N° terminé ».
+
+
+4. À TRANCHER (pas bloquant tout de suite)
+------------------------------------------
+- 7.2 Règles des bulletins ; 8.5 Règles de paie ; 10.1 Prix des packs.
+
+
+5. PROCHAIN BLOC DE L'AGENT (dans Claude Code)
+----------------------------------------------
+1.0 — Propositions de design : plusieurs directions, maquettes HTML + captures
+(page de bienvenue d'une école, choix de connexion, tableau de bord élève,
+super-admin, version téléphone). Attendre le choix avant tout code de page.
+Puis section 1, socle technique, branche bloc/1-socle-technique.
