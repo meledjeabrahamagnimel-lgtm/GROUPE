@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Direction C — Pupitre · Maquettes GROUPE</title>
+<link rel="stylesheet" href="assets/polices.css">
+<link rel="stylesheet" href="assets/jetons.css">
+<style>
+/* Direction C — « Pupitre ». Un outil de travail : rail d'icônes étroit, contenu en modules
+   (« bento »), connexion en un seul écran partagé. Le back-office (super-admin) passe en variante
+   sombre de la charte (§ 2.3), pensée pour les écrans de supervision restés ouverts toute la journée. */
+.c-app { display: grid; grid-template-columns: 72px minmax(0, 1fr); min-height: 820px; }
+.c-rail { background: var(--surface); border-right: 1px solid var(--border); display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 0; }
+.c-rail .logo-ecole { margin-bottom: 14px; }
+.c-rail a { width: 48px; height: 48px; border-radius: var(--r-card); display: grid; place-items: center; color: var(--ink-2); position: relative; }
+.c-rail a:hover { background: var(--surface-alt); color: var(--ink); }
+.c-rail a[aria-current="page"] { background: var(--accent); color: var(--accent-ink); }
+.c-rail a .pt { position: absolute; top: 9px; right: 9px; width: 8px; height: 8px; border-radius: 50%; background: var(--kola); }
+.c-rail .bas { margin-top: auto; }
+.c-barre { display: flex; align-items: center; gap: 14px; height: 56px; padding: 0 24px; border-bottom: 1px solid var(--border); }
+.c-fil { font-size: 14px; color: var(--ink-2); display: flex; gap: 8px; align-items: center; }
+.c-fil strong { color: var(--ink); }
+.c-cmd { margin-left: auto; display: flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--ink-2); font-size: 13px; min-width: 300px; }
+.c-cmd kbd { margin-left: auto; font: 600 11px/1 var(--f-ui); border: 1px solid var(--border-strong); border-radius: 4px; padding: 3px 5px; }
+.c-main { padding: 20px 24px; display: grid; gap: 16px; align-content: start; }
+.c-bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+.c-mod { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-big); padding: 16px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.c-mod-tete { display: flex; align-items: center; gap: 8px; }
+.c-mod-tete .label { color: var(--ink-2); }
+.c-mod-tete a { margin-left: auto; font-size: 13px; }
+.c-v { font: 600 34px/38px var(--f-title); font-variant-numeric: tabular-nums; }
+.c-v small { font: 500 14px/1 var(--f-ui); color: var(--ink-2); }
+.s3 { grid-column: span 3; } .s4 { grid-column: span 4; } .s5 { grid-column: span 5; } .s6 { grid-column: span 6; } .s7 { grid-column: span 7; } .s8 { grid-column: span 8; } .s12 { grid-column: span 12; }
+.c-barres { display: flex; gap: 6px; align-items: end; height: 72px; }
+.c-barres span { flex: 1; background: var(--accent-tint); border-radius: 4px 4px 0 0; }
+.c-barres span.fort { background: var(--accent); }
+.c-semaine { display: grid; grid-template-columns: 48px repeat(5, minmax(0, 1fr)); gap: 4px; font-size: 12px; }
+.c-semaine .j { text-align: center; color: var(--ink-2); font-weight: 600; padding-bottom: 4px; }
+.c-semaine .h { color: var(--ink-2); font-variant-numeric: tabular-nums; padding-top: 4px; }
+.c-semaine .cours { background: var(--accent-tint); border-left: 3px solid var(--accent); border-radius: 6px; padding: 6px 8px; font-weight: 600; line-height: 16px; min-height: 44px; }
+.c-semaine .vide { min-height: 44px; }
+.c-semaine .cours.auj { background: var(--accent); color: var(--accent-ink); }
+
+/* Vitrine : écran partagé */
+.c-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 760px; }
+.c-split-gauche { background: var(--accent); color: var(--accent-ink); padding: 48px; display: flex; flex-direction: column; gap: 24px; }
+.c-split-gauche .logo-ecole { background: var(--accent-ink); color: var(--accent); }
+.c-split-gauche h1 { font: 600 56px/60px var(--f-title); letter-spacing: -0.02em; margin-top: auto; max-width: 14ch; }
+.c-split-gauche p { opacity: .88; max-width: 46ch; font-size: 17px; line-height: 27px; }
+.c-split-droite { padding: 48px; display: grid; gap: 28px; align-content: center; }
+.c-faits { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.c-faits .c-mod strong { font: 600 28px/32px var(--f-title); font-variant-numeric: tabular-nums; }
+.c-seg { display: grid; grid-template-columns: repeat(4, 1fr); padding: 4px; gap: 4px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--r-big); }
+.c-seg button { min-height: 44px; border: 0; border-radius: 8px; background: transparent; font-weight: 600; font-size: 14px; color: var(--ink-2); cursor: pointer; display: inline-flex; gap: 6px; align-items: center; justify-content: center; }
+.c-seg button[aria-pressed="true"] { background: var(--surface); color: var(--ink); border: 1px solid var(--border); }
+
+/* Super-admin sombre */
+.c-live { font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size: 12px; line-height: 22px; }
+.c-live div { display: grid; grid-template-columns: 70px 44px minmax(0, 1fr) 110px 44px 64px; gap: 10px; border-bottom: 1px solid var(--border); padding: 3px 0; }
+.c-live div span:last-child { text-align: right; }
+.c-ok { color: var(--ok); } .c-wait { color: var(--wait); } .c-err { color: var(--err); }
+.c-switch { display: inline-flex; align-items: center; gap: 10px; }
+.c-switch .piste { width: 52px; height: 30px; border-radius: 999px; background: var(--border-strong); position: relative; }
+.c-switch .piste::after { content: ""; position: absolute; top: 4px; left: 4px; width: 22px; height: 22px; border-radius: 50%; background: var(--ink); }
+.c-histo { display: flex; align-items: end; gap: 3px; height: 90px; }
+.c-histo span { flex: 1; background: var(--accent); opacity: .85; border-radius: 2px 2px 0 0; }
+.c-histo span.lent { background: var(--kola); }
+
+/* Maintenance */
+.c-mnt { display: grid; grid-template-columns: minmax(0, 1fr) 420px; min-height: 720px; }
+.c-mnt-g { padding: 56px; display: grid; gap: 24px; align-content: center; }
+.c-mnt-g h1 { font: 600 48px/52px var(--f-title); max-width: 16ch; }
+.c-mnt-d { background: var(--surface); border-left: 1px solid var(--border); padding: 40px 32px; display: grid; gap: 18px; align-content: center; }
+.c-journal { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--border-strong); display: grid; gap: 16px; }
+.c-journal li { padding-left: 16px; position: relative; display: grid; gap: 2px; }
+.c-journal li::before { content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--border-strong); }
+.c-journal li.fait::before { background: var(--accent); border-color: var(--accent); }
+.c-journal li.cours::before { border-color: var(--accent); }
+
+/* Téléphone */
+.c-m-top { display: flex; align-items: center; gap: 10px; height: 56px; padding: 0 14px; border-bottom: 1px solid var(--border); background: var(--surface); }
+.c-m-corps { padding: 14px; display: grid; gap: 12px; }
+.c-m-bas { position: absolute; left: 0; right: 0; bottom: 0; height: 76px; display: grid; grid-template-columns: repeat(5, 1fr); align-items: center; background: var(--surface); border-top: 1px solid var(--border); padding-bottom: 14px; }
+.c-m-bas a { display: grid; place-items: center; height: 48px; color: var(--ink-2); }
+.c-m-bas a.qr { width: 56px; height: 56px; margin: -22px auto 0; border-radius: 50%; background: var(--accent); color: var(--accent-ink); border: 4px solid var(--ground); }
+.c-m-bas a[aria-current="page"] { color: var(--ink); }
+</style>
+</head>
+<body data-direction="C — Pupitre">
+
+<!-- =========================================================================================== -->
+<section class="pres-ecran" id="vitrine" data-ecran="1-vitrine">
+  <header><span class="pres-num">Écran 1</span><h2>Page de bienvenue de l'école</h2>
+    <p>Écran partagé : à gauche, l'identité de l'école sur un aplat de sa couleur ; à droite, les faits et l'entrée vers la connexion. C'est la direction où la couleur de l'école se voit le plus.</p></header>
+  <div class="pres-cadre">
+    <div class="c-split">
+      <div class="c-split-gauche">
+        <div style="display:flex;gap:12px;align-items:center"><div class="logo-ecole">LF</div><strong style="font:600 17px/20px var(--f-title)">Lycée Moderne Les Flamboyants</strong></div>
+        <h1>Former des esprits libres et rigoureux.</h1>
+        <p>Établissement privé laïc à Cocody, de la 6e à la Terminale, depuis 1987.</p>
+      </div>
+      <div class="c-split-droite">
+        <div class="c-faits">
+          <div class="c-mod"><span class="label">Élèves</span><strong>1 240</strong></div>
+          <div class="c-mod"><span class="label">BAC 2026</span><strong>94 %</strong></div>
+          <div class="c-mod"><span class="label">Enseignants</span><strong>64</strong></div>
+          <div class="c-mod"><span class="label">Filières</span><strong>A · C · D · G2</strong></div>
+        </div>
+        <div class="c-mod">
+          <div class="c-mod-tete"><span class="label">Actualités</span><a href="#">Toutes</a></div>
+          <div style="display:grid;gap:10px;font-size:14px">
+            <div style="display:flex;gap:10px"><span class="muted num" style="width:48px">10/10</span><span>Réunion parents-professeurs le 8 novembre</span></div>
+            <div style="display:flex;gap:10px"><span class="muted num" style="width:48px">02/09</span><span>Calendrier 2026-2027 disponible</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primaire" href="#connexion">Se connecter <svg class="icon"><use href="#i-fleche"/></svg></a><a class="btn" href="#">Présentation et filières</a></div>
+        <p class="aide">Rue des Jardins, Cocody · contact@flamboyants.example</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================================== -->
+<section class="pres-ecran" id="connexion" data-ecran="2-connexion">
+  <header><span class="pres-num">Écran 2</span><h2>Choix de connexion</h2>
+    <p>Un seul écran : le choix de l'espace est un sélecteur au-dessus du formulaire, qui change le libellé du champ (matricule, email, téléphone). Une étape de moins que A et B.</p></header>
+  <div class="pres-cadre">
+    <div class="c-split">
+      <div class="c-split-gauche" style="justify-content:flex-end">
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:auto"><div class="logo-ecole">LF</div><strong style="font:600 17px/20px var(--f-title)">Les Flamboyants</strong></div>
+        <h1 style="font-size:44px;line-height:48px">Bon retour parmi nous.</h1>
+        <p>Notes, absences, paiements et messages, au même endroit.</p>
+      </div>
+      <form class="c-split-droite" onsubmit="return false" style="max-width:520px">
+        <h2 class="t-page">Connexion</h2>
+        <div class="c-seg" role="group" aria-label="Espace">
+          <button type="button" aria-pressed="true"><svg class="icon" style="width:18px;height:18px"><use href="#i-eleve"/></svg>Élève</button>
+          <button type="button" aria-pressed="false">Parent</button>
+          <button type="button" aria-pressed="false">Enseignant</button>
+          <button type="button" aria-pressed="false">Admin.</button>
+        </div>
+        <div class="champ"><label for="c-mat">Matricule</label><input id="c-mat" autocomplete="username" value="17845236Z"><span class="aide">Le matricule national figure sur votre carte scolaire.</span></div>
+        <div class="champ"><label for="c-mdp">Mot de passe</label><input id="c-mdp" type="password" autocomplete="current-password" value="••••••••••"></div>
+        <button class="btn btn-primaire">Se connecter</button>
+        <div style="display:flex;justify-content:space-between;font-size:14px"><a href="#">Mot de passe oublié ?</a><span class="muted">Email puis code SMS</span></div>
+        <div class="bandeau-phishing"><svg class="icon"><use href="#i-bouclier"/></svg><span>Nous ne demandons jamais votre mot de passe par email, SMS ou téléphone.</span></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================================== -->
+<section class="pres-ecran" id="eleve" data-ecran="3-eleve">
+  <header><span class="pres-num">Écran 3</span><h2>Tableau de bord élève</h2>
+    <p>Des modules de tailles différentes, rangés par importance. La semaine entière est visible d'un coup, le cours en cours est en couleur pleine.</p></header>
+  <div class="pres-cadre">
+    <div class="c-app">
+      <nav class="c-rail" aria-label="Espace élève">
+        <div class="logo-ecole">LF</div>
+        <a href="#" aria-current="page" aria-label="Tableau de bord"><svg class="icon"><use href="#i-grille"/></svg></a>
+        <a href="#" aria-label="Notes"><svg class="icon"><use href="#i-notes"/></svg></a>
+        <a href="#" aria-label="Emploi du temps"><svg class="icon"><use href="#i-agenda"/></svg></a>
+        <a href="#" aria-label="Pointage"><svg class="icon"><use href="#i-qr"/></svg></a>
+        <a href="#" aria-label="Paiements"><svg class="icon"><use href="#i-portefeuille"/></svg></a>
+        <a href="#" aria-label="Mon dossier"><svg class="icon"><use href="#i-dossier"/></svg></a>
+        <a href="#" aria-label="Classement"><svg class="icon"><use href="#i-trophee"/></svg></a>
+        <a href="#" aria-label="Messagerie (2 non lus)"><svg class="icon"><use href="#i-message"/></svg><span class="pt"></span></a>
+        <a class="bas" href="#" aria-label="Mon profil"><span class="avatar">AK</span></a>
+      </nav>
+      <div>
+        <div class="c-barre">
+          <div class="c-fil"><span>Les Flamboyants</span>/<strong>Tableau de bord</strong></div>
+          <div class="c-cmd"><svg class="icon" style="width:16px;height:16px"><use href="#i-recherche"/></svg>Aller à… notes, cours, documents<kbd>Ctrl K</kbd></div>
+        </div>
+        <main class="c-main">
+          <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><h1 class="t-page">Bonjour, Aya</h1><span class="muted">1re D · Mat. 17845236Z · Trimestre 1</span></div>
+          <div class="c-bento">
+            <div class="c-mod s3"><div class="c-mod-tete"><span class="label">Moyenne</span></div><span class="c-v">14,62<small> /20</small></span><span class="pastille p-ok">+0,8</span></div>
+            <div class="c-mod s3"><div class="c-mod-tete"><span class="label">Rang</span></div><span class="c-v">4<small>e / 52</small></span><span class="muted" style="font-size:13px">Tête : 17,05</span></div>
+            <div class="c-mod s3"><div class="c-mod-tete"><span class="label">Absences</span></div><span class="c-v">3<small> h</small></span><span class="pastille p-wait">1 h à justifier</span></div>
+            <div class="c-mod s3"><div class="c-mod-tete"><span class="label">Reste à payer</span></div><span class="c-v" style="font-size:28px">75 000<small> FCFA</small></span><a class="btn btn-primaire" href="#" style="min-height:40px">Payer</a></div>
+
+            <div class="c-mod s8">
+              <div class="c-mod-tete"><span class="label">Ma semaine</span><a href="#">Emploi du temps</a></div>
+              <div class="c-semaine">
+                <span></span><span class="j">Lun 27</span><span class="j">Mar 28</span><span class="j" style="color:var(--ink)">Mer 29</span><span class="j">Jeu 30</span><span class="j">Ven 31</span>
+                <span class="h">07:30</span><span class="cours">Français</span><span class="cours">Maths</span><span class="cours auj">Maths<br><span style="font-weight:400">B12</span></span><span class="cours">Anglais</span><span class="cours">Maths</span>
+                <span class="h">09:45</span><span class="cours">Physique</span><span class="cours">SVT</span><span class="cours auj">SVT<br><span style="font-weight:400">Labo 2</span></span><span class="cours">Histoire</span><span class="cours">Physique</span>
+                <span class="h">14:00</span><span class="cours">EPS</span><span class="vide"></span><span class="cours">Philosophie</span><span class="cours">SVT</span><span class="vide"></span>
+              </div>
+            </div>
+            <div class="c-mod s4">
+              <div class="c-mod-tete"><span class="label">Moyenne par mois</span></div>
+              <div class="c-barres" role="img" aria-label="Moyennes mensuelles en hausse"><span style="height:52%"></span><span style="height:60%"></span><span style="height:58%"></span><span style="height:66%"></span><span class="fort" style="height:74%"></span></div>
+              <div class="muted num" style="display:flex;justify-content:space-between;font-size:12px"><span>Juin</span><span>Juil.</span><span>Sept.</span><span>Oct.</span><span>Nov.</span></div>
+            </div>
+
+            <div class="c-mod s7">
+              <div class="c-mod-tete"><span class="label">Dernières notes</span><a href="#">Toutes</a></div>
+              <table class="table dense num">
+                <thead><tr><th>Matière</th><th>Évaluation</th><th class="droite">Coef.</th><th class="droite">Note</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Mathématiques</strong></td><td>DS n° 2 · 27/10</td><td class="droite">5</td><td class="droite"><strong>15,50</strong></td></tr>
+                  <tr><td><strong>SVT</strong></td><td>Interrogation · 24/10</td><td class="droite">4</td><td class="droite"><strong>17,00</strong></td></tr>
+                  <tr><td><strong>Physique-chimie</strong></td><td>TP · 22/10</td><td class="droite">4</td><td class="droite"><strong>12,75</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="c-mod s5">
+              <div class="c-mod-tete"><span class="label">Meilleurs de la classe</span><a href="#">Classement</a></div>
+              <div style="display:grid;gap:8px" class="num">
+                <div style="display:flex;gap:10px;align-items:center"><span class="avatar">IT</span><span style="flex:1">Ismaël Traoré</span><span class="pastille p-neutre">1er</span><strong>17,05</strong></div>
+                <div style="display:flex;gap:10px;align-items:center"><span class="avatar">GN</span><span style="flex:1">Grâce N'Guessan</span><span class="pastille p-neutre">2e</span><strong>16,40</strong></div>
+                <div style="display:flex;gap:10px;align-items:center"><span class="avatar">MB</span><span style="flex:1">Moussa Bamba</span><span class="pastille p-neutre">3e</span><strong>15,88</strong></div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================================== -->
+<section class="pres-ecran" id="superadmin" data-ecran="4-superadmin">
+  <header><span class="pres-num">Écran 4</span><h2>Tableau du super-admin</h2>
+    <p>Variante sombre de la charte (même jetons, inversés). Flux du journal des requêtes en direct, répartition des temps de réponse, attaques bloquées et interrupteur de maintenance.</p></header>
+  <div class="pres-cadre sombre" data-plateforme style="background:var(--ground);color:var(--ink)">
+    <div class="c-app">
+      <nav class="c-rail" aria-label="Super-admin">
+        <div class="logo-ecole">G</div>
+        <a href="#" aria-current="page" aria-label="Vue d'ensemble"><svg class="icon"><use href="#i-grille"/></svg></a>
+        <a href="#" aria-label="Écoles"><svg class="icon"><use href="#i-admin"/></svg></a>
+        <a href="#" aria-label="Abonnements"><svg class="icon"><use href="#i-portefeuille"/></svg></a>
+        <a href="#" aria-label="Performance"><svg class="icon"><use href="#i-activite"/></svg></a>
+        <a href="#" aria-label="Journal des requêtes"><svg class="icon"><use href="#i-journal"/></svg></a>
+        <a href="#" aria-label="Sécurité (7 alertes)"><svg class="icon"><use href="#i-bouclier"/></svg><span class="pt"></span></a>
+        <a href="#" aria-label="Maintenance"><svg class="icon"><use href="#i-maintenance"/></svg></a>
+        <a class="bas" href="#" aria-label="Paramètres"><svg class="icon"><use href="#i-reglages"/></svg></a>
+      </nav>
+      <div>
+        <div class="c-barre">
+          <div class="c-fil"><span>GROUPE</span>/<strong>Supervision</strong></div>
+          <span class="pastille p-ok">Opérationnel</span>
+          <div class="c-cmd"><svg class="icon" style="width:16px;height:16px"><use href="#i-recherche"/></svg>École, IP, référence d'incident…<kbd>Ctrl K</kbd></div>
+        </div>
+        <main class="c-main">
+          <div class="c-bento">
+            <div class="c-mod s3"><span class="label">Écoles actives</span><span class="c-v">128</span><span class="muted" style="font-size:13px">+3 ce mois · 9 démo</span></div>
+            <div class="c-mod s3"><span class="label">Revenu mensuel</span><span class="c-v">18,4<small> M FCFA</small></span><span class="pastille p-ok">+6,2 %</span></div>
+            <div class="c-mod s3"><span class="label">Latence p95</span><span class="c-v">142<small> ms</small></span><span class="muted" style="font-size:13px">p50 38 ms · seuil 1 s</span></div>
+            <div class="c-mod s3"><span class="label">Erreurs 5xx</span><span class="c-v">0,04<small> %</small></span><span class="muted" style="font-size:13px">12 / 24 h · 3 regroupées</span></div>
+
+            <div class="c-mod s8">
+              <div class="c-mod-tete"><span class="label">Journal des requêtes — en direct</span><span class="pastille p-ok" style="margin-left:auto">Flux actif</span><a href="#">Filtrer</a></div>
+              <div class="c-live num">
+                <div class="muted"><span>Heure</span><span>Méth.</span><span>Route</span><span>École</span><span>Code</span><span>Durée</span></div>
+                <div><span>09:14:52</span><span>GET</span><span>/eleve/notes</span><span>flamboyants</span><span class="c-ok">200</span><span>38 ms</span></div>
+                <div><span>09:14:51</span><span>POST</span><span>/paiements/webhook</span><span>igs-abidjan</span><span class="c-ok">200</span><span>112 ms</span></div>
+                <div><span>09:14:49</span><span>POST</span><span>/connexion</span><span>st-viateur</span><span class="c-wait">429</span><span>4 ms</span></div>
+                <div><span>09:14:47</span><span>GET</span><span>/secretariat/inscriptions</span><span>flamboyants</span><span class="c-ok">200</span><span>61 ms</span></div>
+                <div><span>09:14:44</span><span>GET</span><span>/bulletins/…/pdf</span><span>univ-lagunaire</span><span class="c-err">500</span><span>1 204 ms</span></div>
+                <div><span>09:14:43</span><span>GET</span><span>/professeur/classes</span><span>igs-abidjan</span><span class="c-ok">200</span><span>44 ms</span></div>
+                <div><span>09:14:41</span><span>POST</span><span>/pointage/qr</span><span>flamboyants</span><span class="c-ok">201</span><span>19 ms</span></div>
+              </div>
+              <span class="aide">Mots de passe, jetons et codes SMS masqués avant écriture. Table partitionnée par mois.</span>
+            </div>
+            <div class="c-mod s4">
+              <div class="c-mod-tete"><span class="label">Maintenance</span></div>
+              <div class="c-switch"><span class="piste" role="switch" aria-checked="false" aria-label="Mettre en maintenance"></span><strong>Plateforme en ligne</strong></div>
+              <div class="champ"><label for="c-mc">Email affiché</label><input id="c-mc" value="support@groupe.example"></div>
+              <div class="champ"><label for="c-mt">Téléphone affiché</label><input id="c-mt" value="+225 07 00 00 00 00"></div>
+              <a class="btn" href="#maintenance">Aperçu de la page</a>
+            </div>
+
+            <div class="c-mod s5">
+              <div class="c-mod-tete"><span class="label">Temps de réponse — répartition</span></div>
+              <div class="c-histo" role="img" aria-label="Majorité des requêtes sous 100 ms, quelques-unes lentes"><span style="height:40%"></span><span style="height:92%"></span><span style="height:100%"></span><span style="height:70%"></span><span style="height:44%"></span><span style="height:26%"></span><span style="height:14%"></span><span style="height:8%"></span><span style="height:5%"></span><span class="lent" style="height:3%"></span><span class="lent" style="height:2%"></span></div>
+              <div class="muted num" style="display:flex;justify-content:space-between;font-size:12px"><span>0 ms</span><span>100</span><span>300</span><span>1 s+</span></div>
+            </div>
+            <div class="c-mod s7">
+              <div class="c-mod-tete"><span class="label">Attaques bloquées — 24 h</span><a href="#">Sécurité</a></div>
+              <table class="table dense">
+                <thead><tr><th>Heure</th><th>Type</th><th>Cible</th><th>Adresse</th><th>Réponse</th></tr></thead>
+                <tbody class="num">
+                  <tr><td>03:12</td><td><span class="pastille p-err">Injection SQL</span></td><td class="mono">/connexion</td><td class="mono">203.0.113.24</td><td>Bannie 24 h</td></tr>
+                  <tr><td>02:47</td><td><span class="pastille p-err">Force brute</span></td><td class="mono">/connexion</td><td class="mono">198.51.100.7</td><td>Captcha, blocage</td></tr>
+                  <tr><td>01:05</td><td><span class="pastille p-wait">SSRF</span></td><td class="mono">/dossier/import</td><td class="mono">203.0.113.90</td><td>URL interne refusée</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================================== -->
+<section class="pres-ecran" id="telephone" data-ecran="5-telephone">
+  <header><span class="pres-num">Écran 5</span><h2>Version téléphone</h2>
+    <p>Les modules s'empilent ; le pointage par QR a son bouton central, toujours à portée du pouce (c'est l'usage n° 1 sur mobile selon le cahier § 22.2).</p></header>
+  <div class="pres-tels">
+    <div class="pres-tel" data-ecran="5a-tel-eleve">
+      <div class="c-m-top"><div class="logo-ecole" style="width:34px;height:34px;font-size:14px">LF</div><strong style="font-size:15px">Bonjour, Aya</strong><span class="avatar" style="margin-left:auto">AK</span></div>
+      <div class="c-m-corps">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div class="c-mod" style="padding:12px;gap:4px"><span class="label">Moyenne</span><span class="c-v" style="font-size:26px">14,62</span></div>
+          <div class="c-mod" style="padding:12px;gap:4px"><span class="label">Rang</span><span class="c-v" style="font-size:26px">4<small>e/52</small></span></div>
+          <div class="c-mod" style="padding:12px;gap:4px"><span class="label">Absences</span><span class="c-v" style="font-size:26px">3<small> h</small></span></div>
+          <div class="c-mod" style="padding:12px;gap:4px"><span class="label">À payer</span><span class="c-v" style="font-size:20px">75 000 F</span></div>
+        </div>
+        <div class="c-mod" style="padding:12px">
+          <div class="c-mod-tete"><span class="label">Aujourd'hui</span></div>
+          <div style="display:grid;gap:8px;font-size:14px" class="num">
+            <div style="display:flex;gap:10px;align-items:center"><span class="muted" style="width:44px">07:30</span><strong style="flex:1">Mathématiques</strong><span class="pastille p-ok">Présente</span></div>
+            <div style="display:flex;gap:10px;align-items:center"><span class="muted" style="width:44px">09:45</span><strong style="flex:1">SVT</strong><span class="pastille p-ok">Présente</span></div>
+            <div style="display:flex;gap:10px;align-items:center"><span class="muted" style="width:44px">14:00</span><strong style="flex:1">Philosophie</strong><span class="pastille p-neutre">À venir</span></div>
+          </div>
+        </div>
+        <div class="c-mod" style="padding:12px">
+          <div class="c-mod-tete"><span class="label">Dernière note</span></div>
+          <div style="display:flex;align-items:center;gap:10px"><strong style="flex:1">Mathématiques · DS 2</strong><span class="c-v num" style="font-size:24px">15,50</span></div>
+        </div>
+        <a class="btn btn-primaire" href="#">Payer 75 000 FCFA</a>
+      </div>
+      <nav class="c-m-bas" aria-label="Navigation">
+        <a href="#" aria-current="page" aria-label="Accueil"><svg class="icon"><use href="#i-grille"/></svg></a>
+        <a href="#" aria-label="Notes"><svg class="icon"><use href="#i-notes"/></svg></a>
+        <a href="#" class="qr" aria-label="Pointer avec le QR"><svg class="icon"><use href="#i-qr"/></svg></a>
+        <a href="#" aria-label="Messages"><svg class="icon"><use href="#i-message"/></svg></a>
+        <a href="#" aria-label="Plus"><svg class="icon"><use href="#i-menu"/></svg></a>
+      </nav>
+    </div>
+    <div class="pres-tel" data-ecran="5b-tel-connexion">
+      <div style="background:var(--accent);color:var(--accent-ink);padding:28px 20px 24px;display:grid;gap:14px">
+        <div class="logo-ecole" style="background:var(--accent-ink);color:var(--accent)">LF</div>
+        <strong style="font:600 30px/34px var(--f-title)">Bon retour parmi nous.</strong>
+      </div>
+      <form style="padding:20px;display:grid;gap:16px" onsubmit="return false">
+        <div class="c-seg" style="grid-template-columns:1fr 1fr" role="group" aria-label="Espace">
+          <button type="button" aria-pressed="true">Élève</button><button type="button" aria-pressed="false">Parent</button>
+          <button type="button" aria-pressed="false">Enseignant</button><button type="button" aria-pressed="false">Administration</button>
+        </div>
+        <div class="champ"><label for="c-mmat">Matricule</label><input id="c-mmat" value="17845236Z"></div>
+        <div class="champ"><label for="c-mmdp">Mot de passe</label><input id="c-mmdp" type="password" value="••••••••••"></div>
+        <button class="btn btn-primaire">Se connecter</button>
+        <a href="#" style="font-size:14px">Mot de passe oublié ?</a>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================================================== -->
+<section class="pres-ecran" id="maintenance" data-ecran="6-maintenance">
+  <header><span class="pres-num">Écran 6</span><h2>Page de maintenance évolutive</h2>
+    <p>À gauche le message et l'heure de retour ; à droite le journal de l'intervention qui se remplit au fil des étapes, et les coordonnées saisies par le super-admin.</p></header>
+  <div class="pres-cadre">
+    <div class="c-mnt">
+      <div class="c-mnt-g">
+        <div style="display:flex;gap:12px;align-items:center"><div class="logo-ecole">LF</div><span class="muted">Lycée Moderne Les Flamboyants</span></div>
+        <span class="label">Maintenance en cours</span>
+        <h1>Nous améliorons la plateforme.</h1>
+        <p style="font-size:17px;line-height:27px;color:var(--ink-3);max-width:52ch">Vos données sont en sécurité. Retour prévu vers <strong class="num">14 h 30</strong> (heure d'Abidjan). La page se met à jour toute seule.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <a class="btn" href="mailto:support@groupe.example"><svg class="icon"><use href="#i-courriel"/></svg>support@groupe.example</a>
+          <a class="btn" href="tel:+2250700000000"><svg class="icon"><use href="#i-telephone"/></svg><span class="num">+225 07 00 00 00 00</span></a>
+        </div>
+      </div>
+      <div class="c-mnt-d">
+        <span class="label">Journal de l'intervention</span>
+        <ol class="c-journal">
+          <li class="fait"><strong>Sauvegarde des données</strong><span class="muted num" style="font-size:13px">13:02 · terminée</span></li>
+          <li class="cours"><strong>Mise à jour des services</strong><span class="muted num" style="font-size:13px">13:18 · en cours, 62 %</span></li>
+          <li><strong>Vérifications finales</strong><span class="muted" style="font-size:13px">à venir</span></li>
+          <li><strong>Remise en ligne</strong><span class="muted num" style="font-size:13px">prévue vers 14:30</span></li>
+        </ol>
+        <span class="aide">Réf. <span class="mono">MNT-2026-10-29</span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="assets/presentation.js"></script>
+<script src="assets/accent.js"></script>
+</body>
+</html>
