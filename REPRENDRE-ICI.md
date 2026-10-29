@@ -1,7 +1,7 @@
 # Reprendre ici
 
 *Écrit pour qui ouvre une séance sur ce projet — le propriétaire ou l'assistant — et doit être
-utile dans la minute. Mis à jour le 16 octobre 2026.*
+utile dans la minute. Mis à jour le 29 octobre 2026.*
 
 **Dans Claude Code : taper `/reprendre`** — l'agent lit ce fichier, la passation, le journal et le
 plan, vérifie le dépôt et fait le point. `/fin-de-bloc` clôt un bloc.
@@ -44,10 +44,10 @@ responsive sur tout écran.
 | Hébergement (plus tard) | VPS + Cloudflare + Laravel Forge ou Ploi |
 | Outil de l'agent | **Claude Code** sur le PC du propriétaire (décidé le 16/10) |
 
-## 3. Où l'on en est — 16 octobre 2026
+## 3. Où l'on en est — 29 octobre 2026
 
 **Branche de référence :** `main`. Le dépôt ne contient encore **aucun code métier** : le
-squelette Laravel et la documentation.
+squelette Laravel, la documentation et, depuis le 29/10, les maquettes de design.
 
 Fait :
 
@@ -57,13 +57,23 @@ Fait :
 - Règles de **propreté du code** et de **validation du design avant le front** (PR #3).
 - **Passage à Claude Code sur le PC du propriétaire décidé** (option A, 16/10) ; `CLAUDE.md`
   réécrit pour donner à l'agent son rôle et sa méthode ; commandes `/reprendre` et `/fin-de-bloc`.
+- **Bloc 1.0 livré le 29/10** (branche `bloc/1.0-propositions-design`) : trois directions de
+  design dans `docs/maquettes/` — **A Registre**, **B Cahier**, **C Pupitre** — six écrans chacune
+  (bienvenue d'une école, connexion, tableau élève, super-admin, téléphone, maintenance), toutes
+  conformes à « Ivoire & Encre », avec le test de la couleur d'école (règle § 2.4, contrastes
+  vérifiés par script). Lancer `python outils/maquettes/generer_polices.py`, puis ouvrir
+  `docs/maquettes/index.html`.
 
-⚠️ Le classeur `PLAN-REALISATION-GROUPE.xlsx` présent sur `main` date du 15/10 (avant les lignes
-0.8, 1.0 et 13.4). **Première action de l'agent dans Claude Code :** `python outils/plan/generer_plan.py`
-puis commiter le classeur régénéré.
+⏸️ **On attend votre choix de direction (ligne 1.0)** avant d'écrire la moindre page.
 
-**Prochain bloc pour l'agent :** **1.0 — propositions de design** (maquettes à valider), puis
-le reste de la section 1, le socle technique, sur la branche `bloc/1-socle-technique`.
+⚠️ Classeur Excel : l'agent ne peut pas pousser de fichier binaire depuis sa session en ligne. Le
+classeur à jour du 29/10 vous est fourni à part ; le déposer sur `main`, ou laisser Claude Code le
+régénérer (`python outils/plan/generer_plan.py`).
+
+**Prochain bloc pour l'agent :** dès votre choix, **section 1 — socle technique** (Inertia + React +
+Tailwind, modules, configuration, jetons de la direction retenue, CI), branche
+`bloc/1-socle-technique`. La partie serveur (1.2, 1.3, 1.5) ne dépend pas du design : elle peut
+démarrer avant le choix si vous le dites.
 
 ## 4. Ce qui reste — et qui le fait
 
@@ -71,10 +81,10 @@ le reste de la section 1, le socle technique, sur la branche `bloc/1-socle-techn
 
 | N° | Quoi | Comment |
 |---|---|---|
-| **0.5** | **Dépôt GESTION-DE-SITES public avec des comptes de démonstration** | GitHub › GESTION-DE-SITES › Settings › General › Danger Zone › *Change visibility* › Private. Changer les mots de passe de ces comptes s'ils existent sur un serveur. |
+| **0.5** | **Dépôt GESTION-DE-SITES public avec des comptes de démonstration** (toujours public au 29/10) | GitHub › GESTION-DE-SITES › Settings › General › Danger Zone › *Change visibility* › Private. Changer les mots de passe de ces comptes s'ils existent sur un serveur. |
 | **0.8** | Installer Claude Code | Node 20 ; `npm install -g @anthropic-ai/claude-code` ; `git clone` du dépôt dans `C:\laragon\www\GROUPE` ; `pip install openpyxl` ; dans le dossier : `claude`, se connecter, taper `/reprendre`. |
 | **0.7** | Poste local : PostgreSQL 16, Redis, Node 20, PHP 8.3 (pdo_pgsql, redis) | Dans Laragon. L'agent vous guidera depuis Claude Code (`ENVIRONNEMENT-DE-DEV.md`, ligne 1.7). |
-| **1.0** | Choisir une direction de design | Quand l'agent présentera les maquettes. |
+| **1.0** | **Choisir une direction de design** | Double-cliquer sur `docs/maquettes/index.html` (ou regarder les captures), puis répondre « Je prends A », « B », « C » ou un mélange (« B avec le super-admin de C »). |
 | **1.6** | Protéger `main` | Après la CI du bloc 1 : Settings › Branches › ruleset sur `main`. |
 | 0.6 | Nom de domaine | Y réfléchir ; rien à acheter avant la section 12. |
 | 3.5, 8.1 | Comptes de test gratuits (SMS, paiement) | Au moment des sections 3 et 8. Les clés vont dans **votre** `.env`, jamais dans la conversation. |
