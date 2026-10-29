@@ -67,7 +67,7 @@ PLAN = [
         ("Dépôt GESTION-DE-SITES", "0.5", "Comptes de démonstration exposés publiquement",
          "Le dépôt est PUBLIC et contient ACCES_COMPTES.md, ACCES.txt, ACCES-ARTISAN.txt, "
          "ACCES_DE_TEST.txt : comptes de démonstration (dont un super-admin) au mot de passe "
-         "« password ». N'importe qui peut les lire.",
+         "« password ». N'importe qui peut les lire. Vérifié le 29/10 : le dépôt est toujours public.",
          VOUS,
          "1) GitHub › GESTION-DE-SITES › Settings › General › tout en bas « Danger Zone » › "
          "Change visibility › Make private. 2) Si ces comptes de démonstration ont été installés "
@@ -103,11 +103,15 @@ PLAN = [
 
     ("1. SOCLE TECHNIQUE — une base propre, vérifiée automatiquement", [
         ("Design", "1.0", "Propositions visuelles avant toute page",
-         "Plusieurs directions de design (maquettes HTML ouvrables dans le navigateur + captures) "
-         "sur les écrans clés : page de bienvenue d'une école, choix de connexion, tableau de bord "
-         "élève, tableau du super-admin, version téléphone. Aucune page codée avant le choix.",
-         DEUX, "Choisir une direction (ou demander des retouches) et dire laquelle.",
-         A_FAIRE, None, None),
+         "Livré le 29/10 dans docs/maquettes/ : trois directions conformes à la charte « Ivoire & "
+         "Encre » — A Registre (dense, menu latéral), B Cahier (aéré, menu en haut), C Pupitre "
+         "(compact, super-admin sombre). Six écrans chacune : bienvenue d'une école, connexion, "
+         "tableau élève, super-admin, téléphone, maintenance. Test de la couleur d'école intégré "
+         "(règle § 2.4, contrastes vérifiés). Aucune page codée avant le choix.",
+         DEUX,
+         "Double-cliquer sur docs/maquettes/index.html (ou regarder les captures fournies), puis "
+         "répondre par exemple « Je prends B » ou « B avec le super-admin de C ».",
+         ATTENTE_VOUS, D(2026, 10, 29), None),
         ("Front web", "1.1", "Installer Inertia + React + Tailwind",
          "Laravel reste le cœur : routes, contrôleurs, validation, commandes artisan. Les pages "
          "sont en React. Vite compile ; budget de 180 ko de JavaScript par page.",
