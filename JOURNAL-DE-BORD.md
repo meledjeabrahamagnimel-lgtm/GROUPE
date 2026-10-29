@@ -5,6 +5,49 @@ en est maintenant : `REPRENDRE-ICI.md`.*
 
 ---
 
+## 29/10/2026 — Bloc 1.0 : trois propositions de design
+
+**Agent :** Claude (Anthropic), séance en ligne (pas encore Claude Code sur le PC : ligne 0.8).
+
+### Ce qui a été fait
+
+1. **Reprise** : aucun changement sur le dépôt depuis le 16/10 ; prochain bloc selon le plan : 1.0.
+2. **Trois directions de composition**, toutes dans la charte « Ivoire & Encre » (qui est déjà
+   retenue : on ne propose pas d'autres couleurs, on propose des **mises en page**) :
+   - **A — Registre** : menu latéral fixe, chiffres en registre, dense ;
+   - **B — Cahier** : menu en haut, une colonne, grands titres, aéré ;
+   - **C — Pupitre** : rail d'icônes, modules « bento », connexion en un écran, super-admin sombre.
+   Six écrans chacune : bienvenue d'une école, choix de connexion, tableau de bord élève,
+   super-admin (performance, journal des requêtes, intrusions, maintenance), téléphone, page de
+   maintenance évolutive (email et téléphone modifiables par le super-admin).
+3. **Fichiers communs** qui préfigurent le bloc 1.4 : `assets/jetons.css` (jetons et composants),
+   `assets/accent.js` (prototype de la règle § 2.4), et `outils/maquettes/generer_polices.py` qui
+   reconstruit `assets/polices.css` (Fraunces et Public Sans en woff2 intégrés, licence OFL, aucun
+   appel à Google Fonts) après avoir **vérifié l'empreinte SHA-512** des paquets téléchargés. Le
+   CSS généré (≈ 100 ko de base64) n'est pas versionné.
+4. **Captures** de chaque écran (couleur plateforme, plus bordeaux pour le test de la charte),
+   produites par un navigateur sans interface et contrôlées à l'œil ; défauts corrigés avant
+   livraison (pastilles étirées, bouton étiré sur mobile, barre de présentation sur les captures).
+5. **Plan** : ligne 1.0 « Attend vous » depuis le 29/10 ; ligne 0.5 complétée.
+
+### Trouvé en chemin
+
+- **Défaut de la variante sombre corrigé dans le prototype** : en éclaircissant l'accent juste
+  jusqu'à 4,5:1 sur le fond, le texte posé dessus tombait sous 4,5:1 (le blanc était choisi alors
+  que l'encre sombre contrastait mieux). Désormais : l'accent est éclairci jusqu'à 4,5:1 **sur le
+  fond et avec l'encre**, et l'encre la plus contrastée est retenue. À reprendre tel quel au bloc 4.4.
+- La règle de refus § 2.4 ne rejette qu'une bande étroite de couleurs de **luminosité moyenne**
+  (ex. `#808080` : 4,40:1 au mieux) ; un premier exemple « gris clair » passait en réalité
+  (6,86:1 avec l'encre) et a été remplacé.
+- **GESTION-DE-SITES est toujours public** au 29/10 (ligne 0.5).
+- Toujours pas de poussée de binaire depuis la session : captures et classeur fournis à part.
+
+### Ce qui reste
+
+Voir `REPRENDRE-ICI.md` § 4. En attente : **votre choix de direction**. Ensuite : section 1.
+
+---
+
 ## 16/10/2026 — Règles de propreté, design avant le front, passage à Claude Code
 
 **Agent :** Claude (Anthropic).

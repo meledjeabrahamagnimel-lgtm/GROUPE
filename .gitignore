@@ -25,3 +25,5 @@ Homestead.yaml
 Thumbs.db
 !PLAN-CORRECTION-SELFLOW (1).xlsx
 !PLAN-REALISATION-GROUPE.xlsx
+# Généré par outils/maquettes/generer_polices.py (≈ 100 ko de base64, illisible en revue)
+/docs/maquettes/assets/polices.css

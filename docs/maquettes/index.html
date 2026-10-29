@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Propositions de design — GROUPE (bloc 1.0)</title>
+<link rel="stylesheet" href="assets/polices.css">
+<link rel="stylesheet" href="assets/jetons.css">
+<style>
+.i-col { max-width: 1120px; margin: 0 auto; padding: 56px 24px 72px; display: grid; gap: 40px; }
+.i-trois { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.i-dir { padding: 24px; display: grid; gap: 14px; align-content: start; }
+.i-dir .lettre { width: 48px; height: 48px; border-radius: var(--r-card); background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; font: 600 22px/1 var(--f-title); }
+.i-dir ul { margin: 0; padding-left: 18px; color: var(--ink-3); display: grid; gap: 4px; font-size: 14px; }
+.i-commun { padding: 24px; display: grid; gap: 10px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--r-big); }
+.i-commun ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+@media (max-width: 900px) { .i-trois { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<main class="i-col">
+  <div>
+    <span class="label">GROUPE · Bloc 1.0 · Propositions de design</span>
+    <h1 class="display" style="margin-top:10px">Trois façons d'organiser les écrans.</h1>
+    <p style="margin-top:14px;font-size:17px;line-height:27px;color:var(--ink-3);max-width:68ch">
+      La charte « Ivoire & Encre » est déjà retenue : couleurs, polices et règles d'accessibilité sont
+      <strong>les mêmes</strong> dans les trois propositions. Ce qui change, c'est la <strong>composition</strong> :
+      où se trouve le menu, combien d'informations tiennent sur un écran, quel ton donne la page.
+    </p>
+  </div>
+
+  <div class="i-trois">
+    <a class="carte i-dir" href="A-registre.html" style="text-decoration:none">
+      <span class="lettre">A</span><h2 class="t-section">Registre</h2>
+      <p class="muted">Institutionnelle et dense.</p>
+      <ul><li>Menu latéral fixe, regroupé par thème</li><li>Chiffres alignés comme dans un registre</li><li>Beaucoup d'information sans défiler</li><li>Idéale pour le secrétariat et la comptabilité</li></ul>
+      <span class="btn" style="justify-self:start">Ouvrir la direction A</span>
+    </a>
+    <a class="carte i-dir" href="B-cahier.html" style="text-decoration:none">
+      <span class="lettre">B</span><h2 class="t-section">Cahier</h2>
+      <p class="muted">Éditoriale et aérée.</p>
+      <ul><li>Menu en haut, une colonne centrée</li><li>Grands titres, lecture de haut en bas</li><li>Ton accueillant pour élèves et parents</li><li>La plus proche de l'application mobile</li></ul>
+      <span class="btn" style="justify-self:start">Ouvrir la direction B</span>
+    </a>
+    <a class="carte i-dir" href="C-pupitre.html" style="text-decoration:none">
+      <span class="lettre">C</span><h2 class="t-section">Pupitre</h2>
+      <p class="muted">Un outil de travail compact.</p>
+      <ul><li>Rail d'icônes étroit, modules de tailles variées</li><li>Connexion en un seul écran</li><li>Super-admin en variante sombre</li><li>La couleur de l'école se voit le plus</li></ul>
+      <span class="btn" style="justify-self:start">Ouvrir la direction C</span>
+    </a>
+  </div>
+
+  <div class="i-commun">
+    <h2 class="t-sous">Chaque direction montre les mêmes six écrans</h2>
+    <ul>
+      <li>Page de bienvenue d'une école · Choix de connexion · Tableau de bord élève</li>
+      <li>Tableau du super-admin (performance, journal des requêtes, intrusions, maintenance)</li>
+      <li>Version téléphone · Page de maintenance évolutive (email et téléphone modifiables par vous)</li>
+    </ul>
+    <p class="muted" style="font-size:14px">En haut de chaque page, une barre permet de changer la couleur de l'école : c'est le test de la charte (§ 1).
+      Le bouton « Gris moyen » montre une couleur <strong>refusée</strong> parce qu'elle rendrait les boutons illisibles, avec la variante proposée à la place.</p>
+  </div>
+
+  <div class="carte" style="padding:24px;display:grid;gap:10px">
+    <h2 class="t-sous">Comment choisir</h2>
+    <p>Répondez simplement, par exemple : <strong>« Je prends B »</strong>, ou <strong>« B, avec le super-admin de C »</strong>,
+      ou <strong>« A, mais avec la page de bienvenue de B »</strong>. Les mélanges sont possibles : les trois directions partagent les mêmes jetons.</p>
+    <p class="muted" style="font-size:14px">Données entièrement fictives. Aucune page de l'application n'est codée avant votre choix (plan, ligne 1.0).</p>
+  </div>
+</main>
+<script src="assets/accent.js"></script>
+</body>
+</html>

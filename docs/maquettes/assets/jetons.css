@@ -1,0 +1,187 @@
+/* Jetons « Ivoire & Encre » (docs/04-charte-graphique.md § 2 à § 6) et composants communs aux
+ * trois directions. Les directions ne changent QUE la composition (navigation, densité, rythme) :
+ * couleurs, polices, rayons et règles d'accessibilité sont identiques partout, comme l'exige la charte.
+ * Ce fichier préfigure resources/css/jetons.css du bloc 1.4. */
+
+:root {
+  --ground: #FAF7F0;
+  --surface: #FFFFFF;
+  --surface-alt: #F4EFE5;
+  --border: #E4DCCD;
+  --border-strong: #D8CEBB;
+  --ink: #1C1A17;
+  --ink-2: #6B655C;
+  --ink-3: #3D3932;
+  /* Les trois jetons d'accent sont réécrits par accent.js — dans l'application, par le
+     middleware de tenant sur <html>. Aucune feuille de style par école. */
+  --accent: #143D36;
+  --accent-ink: #FFFFFF;
+  --accent-tint: #E8EFEC;
+  --kola: #C1502E;
+  --kola-ink: #A8431F;
+
+  --ok-bg: #E4F0E8;   --ok: #235E42;
+  --wait-bg: #FBF0DA; --wait: #7A4D00;
+  --err-bg: #FBE6E4;  --err: #8C1D18;
+
+  --r-card: 10px;
+  --r-big: 12px;
+  --f-title: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --f-ui: 'Public Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme: light;
+}
+
+/* Variante sombre : inversion des jetons (charte § 2.3), jamais une seconde charte. */
+.sombre {
+  --ground: #16150F;
+  --surface: #1D1B14;
+  --surface-alt: #26231A;
+  --border: #3A362B;
+  --border-strong: #4A4538;
+  --ink: #F2EDE3;
+  --ink-2: #A8A196;
+  --ink-3: #D9D2C5;
+  --ok-bg: #1E3327;   --ok: #8FD1AC;
+  --wait-bg: #3A2E14; --wait: #F0C674;
+  --err-bg: #3D1E1B;  --err: #F2A49C;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 15px/23px var(--f-ui);
+}
+h1, h2, h3 { font-family: var(--f-title); font-weight: 600; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+a { color: inherit; }
+img, svg { display: block; max-width: 100%; }
+button, input, select { font: inherit; color: inherit; }
+
+/* Focus clavier toujours visible (charte § 6). */
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
+
+.display { font: 600 44px/46px var(--f-title); }
+.t-page { font: 600 30px/36px var(--f-title); }
+.t-section { font: 600 24px/30px var(--f-title); }
+.t-sous { font: 600 20px/26px var(--f-ui); }
+.dense { font-size: 13px; line-height: 20px; }
+.label {
+  font: 600 12px/16px var(--f-ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.muted { color: var(--ink-2); }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size: 12.5px; }
+
+.icon { width: 20px; height: 20px; stroke: currentColor; stroke-width: 1.8; fill: none;
+        stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+/* Boutons : un seul primaire visible par écran (charte § 5). Cible ≥ 44 px. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 0 18px; border-radius: var(--r-card);
+  border: 1px solid var(--border-strong); background: var(--surface);
+  font-weight: 600; text-decoration: none; cursor: pointer; white-space: nowrap;
+}
+.btn-primaire { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn-danger { background: var(--kola); color: #fff; border-color: var(--kola); }
+.btn-lien { border-color: transparent; background: transparent; text-decoration: underline;
+            text-underline-offset: 3px; padding: 0 8px; }
+
+.carte { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-card); }
+.carte-big { border-radius: var(--r-big); }
+
+/* Pastilles de statut : toujours un libellé texte, la couleur n'est jamais seule (§ 6). */
+.pastille {
+  justify-self: start; align-self: center;
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 10px; border-radius: 999px;
+  font: 600 12px/20px var(--f-ui); white-space: nowrap;
+}
+.pastille::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.p-ok { background: var(--ok-bg); color: var(--ok); }
+.p-wait { background: var(--wait-bg); color: var(--wait); }
+.p-err { background: var(--err-bg); color: var(--err); }
+.p-neutre { background: var(--surface-alt); color: var(--ink-3); }
+
+/* Tableaux : en-tête sable, bordure 1 px, pas de zébrage (§ 5). */
+.table { width: 100%; border-collapse: collapse; }
+.table th {
+  text-align: left; background: var(--surface-alt); color: var(--ink-2);
+  font: 600 12px/16px var(--f-ui); letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 10px 12px; border-bottom: 1px solid var(--border);
+}
+.table td { padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.table tr:last-child td { border-bottom: 0; }
+.table tbody tr:hover td { background: var(--ground); }
+.table .droite { text-align: right; white-space: nowrap; }
+
+.champ { display: grid; gap: 6px; }
+.champ label { font-weight: 600; font-size: 14px; }
+.champ input, .champ select {
+  min-height: 44px; padding: 0 12px; border-radius: var(--r-card);
+  border: 1px solid var(--border-strong); background: var(--surface);
+}
+.aide { font-size: 13px; color: var(--ink-2); }
+
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--accent-tint); color: var(--ink);
+  display: inline-grid; place-items: center; font: 600 13px/1 var(--f-ui); flex: none;
+}
+
+/* Squelette de chargement (§ 5) — utilisé dans les maquettes pour montrer l'état « en cours ». */
+.squelette { background: linear-gradient(90deg, var(--surface-alt), var(--border), var(--surface-alt));
+             background-size: 200% 100%; border-radius: 6px; height: 12px; }
+
+.logo-ecole {
+  width: 44px; height: 44px; border-radius: var(--r-card); background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; font: 600 18px/1 var(--f-title); flex: none;
+}
+
+.bandeau-phishing {
+  font-size: 13px; color: var(--ink-3); background: var(--surface-alt); border: 1px solid var(--border);
+  border-radius: var(--r-card); padding: 10px 14px; display: flex; gap: 10px; align-items: flex-start;
+}
+
+/* Espace super-admin : accent de la plateforme, jamais celui d'une école. */
+[data-plateforme]:not(.sombre) { --accent: #143D36; --accent-ink: #FFFFFF; --accent-tint: #E8EFEC; }
+
+/* ------------------------------------------------------------------------------------------
+   Cadre de présentation des maquettes (ne fait PAS partie de l'application).
+   ------------------------------------------------------------------------------------------ */
+.pres-barre {
+  position: sticky; top: 0; z-index: 50; display: flex; flex-wrap: wrap; gap: 12px 20px;
+  align-items: center; padding: 10px 20px; background: #1C1A17; color: #F2EDE3; font-size: 13px;
+}
+.pres-barre a { color: #F2EDE3; }
+.pres-barre .pres-titre { font: 600 15px/1 var(--f-title); margin-right: auto; }
+.pres-barre button {
+  min-height: 32px; padding: 0 10px; border-radius: 8px; border: 1px solid #4A4538;
+  background: #26231A; color: #F2EDE3; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+}
+.pres-barre button[aria-pressed="true"] { border-color: #F2EDE3; }
+.pres-barre .rond { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.pres-barre input[type=color] { width: 32px; height: 32px; border: 1px solid #4A4538; border-radius: 8px;
+                                background: #26231A; padding: 2px; cursor: pointer; }
+.pres-message { min-width: 0; flex-basis: 100%; color: #F0C674; display: none; }
+.pres-message.visible { display: block; }
+
+.pres-ecran { padding: 40px 20px 8px; max-width: 1480px; margin: 0 auto; }
+.pres-ecran > header { display: flex; gap: 12px; align-items: baseline; margin-bottom: 14px; flex-wrap: wrap; }
+.pres-ecran > header .pres-num {
+  font: 600 12px/16px var(--f-ui); letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2);
+}
+.pres-ecran > header h2 { font-size: 20px; }
+.pres-ecran > header p { color: var(--ink-2); font-size: 14px; flex-basis: 100%; max-width: 75ch; }
+.pres-cadre { border: 1px solid var(--border-strong); border-radius: var(--r-big); overflow: hidden;
+              background: var(--ground); }
+.pres-tel {
+  width: 390px; max-width: 100%; height: 844px; border: 10px solid #1C1A17; border-radius: 44px;
+  overflow: hidden; background: var(--ground); position: relative; flex: none;
+}
+.pres-tels { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; padding: 24px 0; }
