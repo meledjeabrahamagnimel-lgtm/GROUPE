@@ -1,0 +1,61 @@
+PASSATION DU 29/10/2026 — GROUPE
+================================
+
+À lire avec CLAUDE.md, REPRENDRE-ICI.md, JOURNAL-DE-BORD.md
+et PLAN-REALISATION-GROUPE.xlsx (généré par outils/plan/generer_plan.py).
+Dans Claude Code : taper /reprendre.
+
+Agent : Claude (Anthropic), assistant de développement — séance en ligne.
+
+
+1. OÙ NOUS EN SOMMES
+--------------------
+Branche de référence : main.
+Aucun code métier encore. Bloc 1.0 (propositions de design) livré sur la branche
+bloc/1.0-propositions-design, PR ouverte vers main.
+Plan : 77 chantiers — 8 terminés, 65 à faire, 4 à trancher, 16 attendent le propriétaire.
+
+
+2. FAIT LE 29/10/2026
+---------------------
+- docs/maquettes/ : trois directions conformes à « Ivoire & Encre »
+    A — Registre  (dense, menu latéral fixe)
+    B — Cahier    (aéré, menu en haut, proche du mobile)
+    C — Pupitre   (compact, rail d'icônes, super-admin en sombre)
+  Six écrans chacune : bienvenue d'une école, connexion, tableau élève, super-admin
+  (performance, journal des requêtes, intrusions, maintenance), téléphone, page de maintenance
+  évolutive avec email et téléphone modifiables.
+- Barre de test de la couleur d'école sur chaque page (règle § 2.4 de la charte) ;
+  contrastes vérifiés par script, tableau dans docs/maquettes/README.md.
+- Prototype de la variante sombre corrigé (texte sur accent sous 4,5:1 auparavant).
+- Plan : ligne 1.0 « Attend vous » ; ligne 0.5 complétée (dépôt toujours public au 29/10).
+- Captures PNG et classeur Excel régénéré fournis à part (pas de poussée de binaire possible
+  depuis la session en ligne).
+
+
+3. À FAIRE PAR LE PROPRIÉTAIRE
+------------------------------
+- 1.0 CHOISIR UNE DIRECTION : après git pull, lancer une fois
+  python outils/maquettes/generer_polices.py  (polices de la charte), puis double-cliquer sur
+  docs/maquettes/index.html — ou ouvrir le dossier complet fourni à part, ou les captures ; répondre « Je prends A », « B », « C », ou un mélange
+  (« B avec le super-admin de C »).
+- Fusionner la PR du bloc 1.0 (ou me dire de le faire).
+- Déposer le classeur PLAN-REALISATION-GROUPE.xlsx du 29/10 sur main (ou le laisser à Claude Code).
+- 0.5 URGENT, toujours ouvert : rendre privé le dépôt GESTION-DE-SITES
+  (Settings › General › Danger Zone › Change visibility › Make private), puis changer les mots
+  de passe des comptes de démonstration s'ils existent sur un serveur.
+- 0.8 / 0.7 : Claude Code et PostgreSQL 16 + Redis sur le poste (inchangé).
+Puis dire « N° terminé ».
+
+
+4. À TRANCHER (pas bloquant tout de suite)
+------------------------------------------
+- 7.2 Règles des bulletins ; 8.5 Règles de paie ; 10.1 Prix des packs.
+
+
+5. PROCHAIN BLOC DE L'AGENT
+---------------------------
+Après le choix : section 1, socle technique, branche bloc/1-socle-technique
+(Inertia + React + Tailwind, modules nwidart, .env.example et .gitignore corrigés, jetons de
+la direction retenue et polices locales, CI GitHub). La partie serveur (1.2, 1.3, 1.5) ne
+dépend pas du design et peut démarrer avant le choix, sur simple accord.
